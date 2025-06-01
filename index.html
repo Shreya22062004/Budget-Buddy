@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Buddy</title>
+    <link rel="stylesheet" href="stylesheet.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    </head>
+<body>
+    <header class="main-header">
+        <nav class="nav-container">
+            <h1 class="logo">Budget Buddy</h1>
+            <ul class="nav-links">
+                <li><a href="#" data-section="dashboard" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="app-container">
+        <main class="main-content">
+            <section id="dashboard-section" class="app-section active-section">
+                <div class="dashboard-grid">
+                    <section class="overview-section card">
+                        <h4>YOUR CURRENT BALANCE</h4>
+                        <p class="balance" id="balance">Rs0.00</p>
+                        <div class="income-expense-summary">
+                            <div class="income-box">
+                                <small>Income</small>
+                                <p id="money-plus" class="money plus">Rs0.00</p>
+                            </div>
+                            <div class="expense-box">
+                                <small>Expense</small>
+                                <p id="money-minus" class="money minus">Rs0.00</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="add-transaction-section card">
+                        <h3>Add New Transaction</h3>
+                        <form id="form">
+                            <div class="form-control">
+                                <label for="text">Description</label>
+                                <input type="text" id="text" placeholder="e.g., Groceries, Salary" required>
+                            </div>
+                            <div class="form-control">
+                                <label for="amount">Amount <br> (negative for expense, positive for income)</label>
+                                <input type="number" id="amount" placeholder="Enter amount..." required>
+                            </div>
+                            <button class="btn"><i class="fas fa-plus"></i> Add Transaction</button>
+                        </form>
+                    </section>
+
+                    <section class="transaction-history card">
+                        <h3>Transaction History</h3>
+                        <ul id="list" class="list">
+                            </ul>
+                        <p class="empty-message" style="display: none;">No transactions yet. Add one!</p>
+                    </section>
+                </div>
+            </section>
+
+            </main>
+    </div>
+
+    <div id="feedback-message" class="feedback-message"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

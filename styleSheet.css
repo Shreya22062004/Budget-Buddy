@@ -1,0 +1,802 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+
+:root {
+    /* Fresh & Modern Color Palette */
+    --primary-bg-light: #f4f7fa; /* Very light background for body */
+    --secondary-bg-card: #ffffff; /* White for main cards */
+    --header-footer-bg: #2c3e50; /* Dark blue/grey for header/footer */
+    --text-dark: #34495e; /* Dark text for headings, main content */
+    --text-light: #7f8c8d; /* Lighter text for labels, descriptions */
+    --brand-color: #3498db; /* A vibrant blue for accents, buttons */
+    --brand-color-hover: #2980b9; /* Darker blue on hover */
+    --income-color: #27ae60; /* Clear green for income */
+    --expense-color: #e74c3c; /* Clear red for expense */
+    --border-color: #ecf0f1; /* Light border for separation */
+    --box-shadow-light: 0 4px 12px rgba(0, 0, 0, 0.06); /* Subtle shadow for cards */
+    --box-shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.1); /* Slightly more prominent on hover */
+
+    /* New: Font sizes for better responsiveness and visibility */
+    /* Using clamp for smoother scaling across resolutions */
+    --font-size-lg: clamp(2em, 7vw, 2.8em); /* For main balance */
+    --font-size-md: clamp(1.2em, 4vw, 1.6em); /* For income/expense amounts */
+    --font-size-sm: clamp(0.75em, 2.5vw, 0.9em); /* For small labels */
+    --font-size-base: 16px; /* Base for rem units */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: var(--font-size-base); /* Set base font size for rem */
+}
+
+body {
+    font-family: 'Poppins', sans-serif; /* Using Poppins for modern feel */
+    background-color: var(--primary-bg-light);
+    color: var(--text-dark);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden; /* Prevents horizontal scroll */
+    padding: 0; /* Remove body padding, app-wrapper will handle it */
+
+    /* Animated Background - Subtle gradient */
+    background: linear-gradient(135deg, var(--primary-bg-light) 0%, var(--border-color) 100%);
+    background-size: 200% 200%; /* Smaller gradient for subtle movement */
+    animation: backgroundAnimation 18s ease infinite alternate; /* Slower animation */
+}
+
+@keyframes backgroundAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* --- Header/Navigation Styles --- */
+.main-header {
+    width: 100%;
+    background-color: var(--header-footer-bg); /* Dark header background */
+    box-shadow: var(--box-shadow-light);
+    padding: 1rem 1.5rem; /* Use rem for padding */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-container {
+    max-width: 1500px; /* Expanded max-width */
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: 'Roboto', sans-serif; /* Different font for logo for distinction */
+    font-size: 2rem; /* Use rem */
+    font-weight: 700;
+    color: #ffffff; /* White logo text */
+    letter-spacing: 0.5px;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 2rem; /* Use rem for gap */
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.8); /* Lighter white for links */
+    font-weight: 500;
+    font-size: 1rem; /* Use rem */
+    transition: color 0.3s ease, transform 0.2s ease;
+    padding: 0.3rem 0; /* Use rem for padding */
+    position: relative;
+    display: flex; /* For icon alignment */
+    align-items: center;
+    gap: 0.5rem; /* Use rem for gap */
+}
+
+.nav-links a:hover {
+    color: var(--brand-color); /* Highlight with brand color on hover */
+    transform: translateY(-2px);
+}
+
+.nav-links a.active {
+    color: var(--brand-color); /* Active link color */
+    font-weight: 600;
+}
+
+/* Underline effect on hover and for active link */
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px; /* Thicker underline */
+    background-color: var(--brand-color);
+    bottom: -5px; /* Position slightly below text */
+    left: 0;
+    transition: width 0.3s ease-out;
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+    width: 100%;
+}
+
+
+/* --- Main App Container & Section Hiding/Showing --- */
+.app-container {
+    max-width: 1500px; /* Expanded max-width */
+    width: 90%; /* Responsive width */
+    padding: 1.5rem 0; /* Use rem for padding */
+    flex-grow: 1; /* Allows it to take up available vertical space */
+    margin: 0 auto; /* Center the container */
+    align-items: start; /* Align content to the start */
+    display: flex;
+    flex-direction: column;
+}
+
+.main-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* Use rem for gap */
+}
+
+.app-section {
+    display: none;
+    width: 100%;
+}
+
+.app-section.active-section {
+    display: block;
+}
+
+/* DASHBOARD SPECIFIC LAYOUT */
+.dashboard-grid {
+    display: grid;
+    /* Default is 2 columns for larger screens */
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem; /* Use rem for gap */
+    align-items: start;
+    width: 100%;
+}
+
+/* Ensure the correct items go into the correct columns */
+.dashboard-grid .overview-section {
+    grid-column: 1 / 2; /* First column */
+}
+.dashboard-grid .add-transaction-section {
+    grid-column: 1 / 2; /* First column, below overview */
+}
+.dashboard-grid .transaction-history {
+    grid-column: 2 / 3; /* Second column */
+}
+
+
+h2 {
+    text-align: center;
+    margin-bottom: 1.25rem; /* Use rem */
+    color: var(--text-dark);
+    font-weight: 600;
+    font-size: clamp(1.8rem, 5vw, 2.5rem); /* Smoother scaling */
+    line-height: 1.2;
+    width: 100%;
+}
+
+h1 { /* This seems to be duplicated by .balance now, consider removing or clarifying use */
+    font-size: var(--font-size-lg); /* Use variable with clamp */
+    letter-spacing: 0.5px;
+    margin: 1rem 0; /* Use rem */
+    text-align: center;
+    font-weight: 700;
+    color: var(--brand-color);
+}
+
+h3 {
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 0.75rem; /* Use rem */
+    margin: 0 0 1rem; /* Use rem */
+    font-weight: 600;
+    font-size: clamp(1.2rem, 4vw, 1.8rem); /* Smoother scaling */
+    color: var(--text-dark);
+    text-align: left;
+    padding-left: 0.3rem; /* Use rem */
+}
+
+h4 {
+    margin: 0;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--text-light);
+    font-size: var(--font-size-sm); /* Use variable */
+    letter-spacing: 0.8px;
+    padding-bottom: 0.3rem; /* Use rem */
+}
+
+/* Card Styling - Applied to all major sections */
+.card {
+    background-color: var(--secondary-bg-card);
+    box-shadow: var(--box-shadow-light);
+    border-radius: 10px; /* Keep px for subtle radius */
+    padding: 1.5rem 1.8rem; /* Use rem */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px); /* Keep px for small transform */
+    box-shadow: var(--box-shadow-hover);
+}
+
+/* Specific Card Styles */
+.overview-section {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 1rem; /* Use rem */
+}
+
+.balance {
+    font-size: var(--font-size-lg); /* Use variable with clamp */
+    font-weight: 700;
+    color: var(--brand-color);
+    margin: 0.6rem 0 1.2rem; /* Use rem */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+/* --- Consolidated Income/Expense Summary --- */
+.income-expense-summary {
+    display: flex;
+    width: 100%;
+    border: 1px solid var(--border-color);
+    border-radius: 8px; /* Keep px */
+    overflow: hidden;
+    background-color: var(--primary-bg-light);
+}
+
+.income-box, .expense-box {
+    flex: 1;
+    padding: 1rem 0.6rem; /* Use rem */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem; /* Use rem */
+}
+
+.income-box {
+    background-color: rgba(39, 174, 96, 0.1);
+    border-right: 1px solid rgba(39, 174, 96, 0.2);
+}
+
+.expense-box {
+    background-color: rgba(231, 76, 60, 0.1);
+}
+
+.income-box small, .expense-box small {
+    font-size: var(--font-size-sm); /* Use variable */
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.money {
+    font-size: var(--font-size-md); /* Use variable with clamp */
+    letter-spacing: 0.5px;
+    margin: 0;
+    padding: 0;
+    font-weight: 700;
+    line-height: 1.1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    display: block;
+}
+
+.money.plus {
+    color: var(--income-color);
+}
+
+.money.minus {
+    color: var(--expense-color);
+}
+
+/* Form Controls (shared for Dashboard) */
+.form-control {
+    margin-bottom: 1rem; /* Use rem */
+}
+
+label {
+    display: inline-block;
+    margin-bottom: 0.5rem; /* Use rem */
+    font-weight: 500;
+    color: var(--text-dark);
+    font-size: 0.95rem; /* Use rem */
+}
+
+input[type='text'],
+input[type='number'],
+select {
+    border: 1px solid var(--border-color);
+    border-radius: 6px; /* Keep px */
+    display: block;
+    font-size: 1.1rem; /* Use rem */
+    padding: 0.75rem; /* Use rem */
+    width: 100%;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: var(--primary-bg-light);
+    color: var(--text-dark);
+}
+
+input[type='text']:focus,
+input[type='number']:focus,
+select:focus {
+    outline: none;
+    border-color: var(--brand-color);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    background-color: #ffffff;
+}
+
+.btn {
+    cursor: pointer;
+    background-color: var(--brand-color);
+    box-shadow: var(--box-shadow-light);
+    color: #fff;
+    border: 0;
+    border-radius: 8px; /* Keep px */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem; /* Use rem */
+    font-weight: 600;
+    margin-top: 1.5rem; /* Use rem */
+    padding: 0.875rem 1.5rem; /* Use rem */
+    width: 100%;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.btn i {
+    margin-right: 0.6rem; /* Use rem */
+    font-size: 1.2em; /* Use em relative to button font size */
+}
+
+.btn:hover {
+    background-color: var(--brand-color-hover);
+    transform: translateY(-3px); /* Keep px for small transform */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.btn:focus,
+.delete-btn:focus {
+    outline: 0;
+}
+
+/* Transaction List Styles */
+.list {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 1.25rem; /* Use rem */
+    max-height: 400px; /* Keep px for fixed max height */
+    overflow-y: auto;
+    padding-right: 0.3rem; /* Use rem */
+}
+
+.list li {
+    background-color: var(--primary-bg-light);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    color: var(--text-dark);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding: 0.75rem 1.1rem; /* Use rem */
+    margin: 0.5rem 0; /* Use rem */
+    border-radius: 8px; /* Keep px */
+    overflow: visible;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    font-size: 1.05rem; /* Use rem */
+    font-weight: 500;
+}
+
+.list li span {
+    font-weight: 600;
+    white-space: nowrap;
+    min-width: 5rem; /* Use rem */
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.list li:hover {
+    background-color: #eaf1f7;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+
+/* Animation for new list items */
+.list li.new-transaction {
+    animation: slideInFromLeft 0.4s ease-out forwards;
+}
+
+@keyframes slideInFromLeft {
+    0% { transform: translateX(-100%); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+}
+
+.list li.plus {
+    border-right: 6px solid var(--income-color);
+}
+
+.list li.minus {
+    border-right: 6px solid var(--expense-color);
+}
+
+.delete-btn {
+    cursor: pointer;
+    background-color: var(--expense-color);
+    border: 0;
+    color: #fff;
+    font-size: 1.25rem; /* Use rem */
+    line-height: 1;
+    padding: 0.5rem 0.75rem; /* Use rem */
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate(-100%, -50%);
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+    border-radius: 0 6px 6px 0; /* Keep px */
+}
+
+.list li:hover .delete-btn {
+    opacity: 1;
+    transform: translate(0, -50%);
+}
+
+/* Empty list message styles */
+.empty-message {
+    text-align: center;
+    color: var(--text-light);
+    margin-top: 1.8rem; /* Use rem */
+    font-style: italic;
+    font-size: 1.1rem; /* Use rem */
+    padding: 1rem; /* Use rem */
+    border: 1px dashed var(--border-color);
+    border-radius: 8px; /* Keep px */
+    background-color: var(--secondary-bg-card);
+}
+
+/* Feedback message styles */
+.feedback-message {
+    position: fixed;
+    bottom: 1.8rem; /* Use rem */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.85);
+    color: #fff;
+    padding: 0.75rem 1.5rem; /* Use rem */
+    border-radius: 8px; /* Keep px */
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    font-size: 1rem; /* Use rem */
+    box-shadow: var(--box-shadow-light);
+}
+
+.feedback-message.show {
+    opacity: 1;
+    visibility: visible;
+}
+.feedback-message.error {
+    background-color: var(--expense-color);
+}
+.feedback-message.info {
+    background-color: var(--brand-color);
+}
+
+
+/* Webkit Scrollbar Styling (for Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+    width: 10px; /* Keep px for scrollbar width */
+}
+
+::-webkit-scrollbar-track {
+    background: var(--primary-bg-light);
+    border-radius: 10px; /* Keep px */
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--brand-color);
+    border-radius: 10px; /* Keep px */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--brand-color-hover);
+}
+
+
+/* --- Media Queries for Responsiveness --- */
+
+/* For very large screens and general desktop */
+@media (min-width: 1501px) {
+    .app-container {
+        padding: 3rem 0; /* More padding on very large screens */
+    }
+}
+
+/* Tablets and smaller desktops (around 992px to 1500px) */
+@media (max-width: 1500px) {
+    .app-container, .nav-container {
+        width: 95%; /* Adjust from 1500px to 95% for better use of space */
+    }
+}
+
+/* Medium Tablets and Smaller Desktops (less than 992px) */
+@media (max-width: 992px) {
+    .app-container {
+        padding: 1.5rem 0; /* Adjust padding */
+    }
+
+    .nav-container {
+        flex-direction: column; /* Stack logo and nav links vertically */
+        justify-content: center;
+        gap: 0.8rem; /* Adjust gap */
+    }
+    .logo {
+        margin-bottom: 0.6rem; /* Adjust margin */
+    }
+
+    .nav-links {
+        gap: 1.25rem; /* Adjust gap */
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    /* NOTE: dashboard-grid remains 2 columns here for tablets (992px down to 769px) */
+    /* This ensures Add New Transaction and Transaction History stay side-by-side */
+
+    h2 {
+        font-size: clamp(1.6rem, 4.5vw, 2.2rem); /* Smoother scaling */
+        margin-bottom: 1rem;
+    }
+
+    .balance {
+        font-size: clamp(2rem, 6vw, 2.5rem); /* Smoother scaling */
+    }
+
+    .money {
+        font-size: clamp(1.1rem, 3.5vw, 1.4rem); /* Smoother scaling */
+    }
+
+    h3 {
+        font-size: clamp(1.3rem, 3.8vw, 1.6rem); /* Smoother scaling */
+        margin-top: 1.25rem;
+    }
+
+    .card {
+        padding: 1.25rem 1.5rem; /* Adjust padding */
+    }
+
+    /* Income/Expense summary remains row for this range */
+    .income-expense-summary {
+        flex-direction: row;
+        border: 1px solid var(--border-color);
+        background-color: var(--primary-bg-light);
+    }
+    .income-box, .expense-box {
+        border: none;
+        margin-bottom: 0;
+    }
+    .income-box {
+        border-right: 1px solid rgba(39, 174, 96, 0.2);
+    }
+}
+
+/* Small Tablets and Mobile Phones (less than 768px) */
+@media (max-width: 768px) {
+    .app-container {
+        width: 95%; /* Wider on very small screens */
+        padding: 1rem 0; /* Reduce padding more */
+    }
+
+    /* THIS IS THE KEY CHANGE: dashboard-grid now stacks all items */
+    .dashboard-grid {
+        grid-template-columns: 1fr; /* Now, stack here */
+        gap: 1.5rem;
+    }
+    /* Reset grid-column to allow stacking in source order */
+    .dashboard-grid .overview-section,
+    .dashboard-grid .add-transaction-section,
+    .dashboard-grid .transaction-history {
+        grid-column: auto;
+    }
+
+    .main-header {
+        padding: 0.8rem 1rem; /* Smaller header padding */
+    }
+
+    .logo {
+        font-size: 1.6rem; /* Smaller logo */
+        margin-bottom: 0.5rem;
+    }
+
+    .nav-links {
+        gap: 0.8rem; /* Smaller gap */
+        font-size: 0.9rem;
+    }
+    .nav-links a {
+        padding: 0.2rem 0; /* Smaller padding */
+        font-size: 0.9rem;
+    }
+
+    h2 {
+        font-size: clamp(1.4rem, 4.5vw, 1.8rem); /* Adjust more */
+    }
+
+    .balance {
+        font-size: clamp(1.8rem, 5.5vw, 2.2rem); /* Adjust more */
+    }
+
+    .money {
+        font-size: clamp(1rem, 3vw, 1.2em); /* Adjust more */
+    }
+
+    h3 {
+        font-size: clamp(1.1rem, 3.5vw, 1.4rem); /* Adjust more */
+        margin-top: 1rem;
+    }
+
+    /* Income/Expense summary stacks vertically on small phones */
+    .income-expense-summary {
+        flex-direction: column;
+        border: none;
+        background-color: transparent;
+    }
+
+    .income-box, .expense-box {
+        border: 1px solid var(--border-color); /* Add border back to individual boxes */
+        border-radius: 8px;
+        margin-bottom: 0.6rem; /* Space between stacked boxes */
+        padding: 0.8rem; /* Adjust padding */
+    }
+    .income-box {
+        border-right: 1px solid var(--border-color); /* Override specific border for stacking */
+    }
+
+    .btn {
+        padding: 0.75rem 1rem; /* Smaller padding */
+        font-size: 1rem; /* Smaller font */
+    }
+
+    .list li {
+        font-size: 0.9rem; /* Smaller font */
+        padding: 0.6rem 0.8rem; /* Smaller padding */
+    }
+
+    .delete-btn {
+        font-size: 1.1rem; /* Smaller icon */
+        padding: 0.3rem 0.5rem; /* Smaller padding */
+    }
+
+    .empty-message {
+        margin-top: 1.2rem;
+        padding: 0.8rem;
+        font-size: 1rem;
+    }
+
+    .feedback-message {
+        bottom: 1rem;
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Very Small Mobile Phones (less than 480px) */
+@media (max-width: 480px) {
+    .app-container {
+        width: 98%; /* Even wider to fill small screens more */
+        padding: 0.5rem 0;
+    }
+
+    .main-header {
+        padding: 0.6rem 0.8rem;
+    }
+
+    .logo {
+        font-size: 1.4rem;
+    }
+
+    .nav-links {
+        gap: 0.6rem;
+    }
+
+    .nav-links a {
+        font-size: 0.8rem;
+        gap: 0.5rem;
+    }
+
+    .dashboard-grid {
+        gap: 1rem; /* Reduce gap further */
+    }
+
+    h2 {
+        font-size: clamp(1.2rem, 4vw, 1.6rem);
+    }
+
+    .balance {
+        font-size: clamp(1.6rem, 5vw, 2rem);
+        margin: 0.5rem 0 1rem;
+    }
+
+    .money {
+        font-size: clamp(0.9rem, 2.5vw, 1.1em);
+    }
+
+    h3 {
+        font-size: clamp(1rem, 3.2vw, 1.2rem);
+        margin-top: 0.8rem;
+    }
+
+    .card {
+        padding: 1rem;
+    }
+
+    .income-box, .expense-box {
+        padding: 0.6rem;
+        margin-bottom: 0.4rem;
+    }
+
+    .btn {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.9rem;
+        margin-top: 1rem;
+    }
+
+    input[type='text'],
+    input[type='number'] {
+        font-size: 1rem;
+        padding: 0.6rem;
+    }
+
+    .list li {
+        font-size: 0.85rem;
+        padding: 0.5rem 0.6rem;
+        margin: 0.3rem 0;
+    }
+
+    .delete-btn {
+        font-size: 1rem;
+        padding: 0.2rem 0.4rem;
+    }
+
+    .empty-message {
+        margin-top: 1rem;
+        padding: 0.6rem;
+        font-size: 0.9rem;
+    }
+
+    .feedback-message {
+        bottom: 0.8rem;
+        padding: 0.5rem 0.8rem;
+        font-size: 0.8rem;
+    }
+}
